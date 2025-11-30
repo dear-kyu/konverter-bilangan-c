@@ -4,45 +4,42 @@
 //Nama : Dealova Quaybah
 //NRP : 162024005
 
-int pangkat(int basis, int pangkat) {
-    int hasil = 1;
-    for(int i = 0; i < pangkat; i++) {
+long long pangkat(long long basis, long long pangkat) {
+    long long hasil = 1;
+    for(long long i = 0; i < pangkat; i++) {
         hasil *= basis;
     }
     return hasil;
 }
 
-int strToDec(char s[]) {
-    int d;
-    sscanf(s, "%d", &d);
+long long strKeDec(char s[]) {
+    long long d;
+    sscanf(s, "%lld", &d);
     return d;
 }
 
-int binToDec(char biner[]) {
-    int panjang = strlen(biner);
-    int desimal = 0;
+long long binKeDec(char biner[]) {
+    long long panjang = strlen(biner);
+    long long desimal = 0;
 
-    for(int i = 0; i < panjang; i++) {
+    for(long long i = 0; i < panjang; i++) {
         int bin;
 
-        if (biner[i] == '1') {
-            bin = 1;
-        } else {
-            bin = 0;
-        }
+        if (biner[i] == '1') bin = 1;
+        else bin = 0;
 
-        int posisiKanan = panjang - 1 - i;
+        long long posisiKanan = panjang - 1 - i;
         desimal += bin * pangkat(2, posisiKanan);
     }
     return desimal;
 }
 
-int octToDec(char oktal[]) {
-    int panjang = strlen(oktal);
-    int desimal = 0;
+long long octKeDec(char oktal[]) {
+    long long panjang = strlen(oktal);
+    long long desimal = 0;
 
-    for(int i = 0; i < panjang; i++) {
-        int digit;
+    for(long long i = 0; i < panjang; i++) {
+        long long digit;
         switch (oktal[i]) {
             case '0': digit = 0; break;
             case '1': digit = 1; break;
@@ -53,22 +50,22 @@ int octToDec(char oktal[]) {
             case '6': digit = 6; break;
             case '7': digit = 7; break;
             default:
-                printf("Error. Karakter bukan angka oktal\n");
+                printf("Error. Karakter bukan angka oktal");
                 return -1;
         }
 
-        int posisiKanan = panjang - 1 - i;
+        long long posisiKanan = panjang - 1 - i;
         desimal += digit * pangkat(8, posisiKanan);
     }
     return desimal;
 }
 
-int hexToDec(char heksa[]) {
-    int panjang = strlen(heksa);
-    int desimal = 0;
+long long hexKeDec(char heksa[]) {
+    long long panjang = strlen(heksa);
+    long long desimal = 0;
 
-    for(int i = 0; i < panjang; i++) {
-        int nilai;
+    for(long long i = 0; i < panjang; i++) {
+        long long nilai;
         switch (heksa[i]) {
             case '0': nilai = 0; break;
             case '1': nilai = 1; break;
@@ -89,78 +86,62 @@ int hexToDec(char heksa[]) {
             case 'F': case 'f': nilai = 15; break;
 
             default:
-                printf("Error. Karakter bukan Hexadecimal\n");
+                printf("Error. Karakter bukan Hexadecimal");
                 return -1;
         }
 
-        int posisiKanan = panjang - 1 - i;
+        long long posisiKanan = panjang - 1 - i;
         desimal += nilai * pangkat(16, posisiKanan);
     }
     return desimal;
 }
 
-
-void decToBin(int desimal) {
-    int sisa[50], indeks = 0;
+void decKeBin(long long desimal) {
+    long long sisa[70], indeks = 0;
     if (desimal == 0) { printf("0"); return; }
-
-   while (desimal > 0) {
-        sisa[indeks] = desimal % 2; 
-        indeks++;                    
-        desimal = desimal / 2;       
-    }
-
-    for(int j = indeks-1; j >= 0; j--) {
-        printf("%d", sisa[j]);
-    }
-}
-
-
-void decToOct(int desimal) {
-    int sisa[50], indeks = 0;
-    if (desimal == 0) { printf("0"); return; }
-
-     while (desimal > 0) {
-        sisa[indeks] = desimal % 8; 
-        indeks++;                    
-        desimal = desimal / 8;       
-    }
-
-    for(int j = indeks-1; j >= 0; j--) {
-        printf("%d", sisa[j]);
-    }
-}
-
-
-void decToHex(int desimal) {
-    char hex[50];
-    int indeks = 0;
-
-    if (desimal == 0) {
-        printf("0");
-        return;
-    }
 
     while (desimal > 0) {
-        int sisa = desimal % 16;
+        sisa[indeks] = desimal % 2;
+        indeks++;
+        desimal /= 2;
+    }
+
+    for(long long j = indeks - 1; j >= 0; j--) printf("%lld", sisa[j]);
+}
+
+void decKeOct(long long desimal) {
+    long long sisa[70], indeks = 0;
+    if (desimal == 0) { printf("0"); return; }
+
+    while (desimal > 0) {
+        sisa[indeks] = desimal % 8;
+        indeks++;
+        desimal /= 8;
+    }
+
+    for(long long j = indeks - 1; j >= 0; j--) printf("%lld", sisa[j]);
+}
+
+void decKeHex(long long desimal) {
+    char hex[70];
+    long long indeks = 0;
+
+    if (desimal == 0) { printf("0"); return; }
+
+    while (desimal > 0) {
+        long long sisa = desimal % 16;
         char digitHex;
 
-        if (sisa < 10) {
-            digitHex = '0' + sisa;
-        } else {
-            digitHex = 'A' + (sisa - 10);
-        }
+        if (sisa < 10) digitHex = '0' + sisa;
+        else digitHex = 'A' + (sisa - 10);
 
         hex[indeks] = digitHex;
         indeks++;
-        desimal = desimal / 16;
+        desimal /= 16;
     }
 
-    for (int i = indeks - 1; i >= 0; i--) {
-        printf("%c", hex[i]);
-    }
+    for(long long j = indeks - 1; j >= 0; j--) printf("%c", hex[j]);
 }
-
 
 int main() {
     int p;
@@ -190,22 +171,22 @@ int main() {
         printf("Masukkan nilai: ");
         scanf("%s", s);
 
-        int d;
+        long long d;
 
         switch(p) {
-            case 1:  d = binToDec(s); printf("%d", d); break;
-            case 2:  d = binToDec(s); decToOct(d); break;
-            case 3:  d = binToDec(s); decToHex(d); break;
-            case 4:  d = strToDec(s); decToBin(d); break;
-            case 5:  d = strToDec(s); decToOct(d); break;
-            case 6:  d = strToDec(s); decToHex(d); break;
-            case 7:  d = hexToDec(s); printf("%d", d); break;
-            case 8:  d = hexToDec(s); decToBin(d); break;
-            case 9:  d = hexToDec(s); decToOct(d); break;
-            case 10: d = octToDec(s); printf("%d", d); break;
-            case 11: d = octToDec(s); decToBin(d); break;
-            case 12: d = octToDec(s); decToHex(d); break;
-            default: printf("Pilihan tidak valid!");
+            case 1:  d = binKeDec(s); printf("%lld", d); break;
+            case 2:  d = binKeDec(s); decKeOct(d); break;
+            case 3:  d = binKeDec(s); decKeHex(d); break;
+            case 4:  d = strKeDec(s); decKeBin(d); break;
+            case 5:  d = strKeDec(s); decKeOct(d); break;
+            case 6:  d = strKeDec(s); decKeHex(d); break;
+            case 7:  d = hexKeDec(s); printf("%lld", d); break;
+            case 8:  d = hexKeDec(s); decKeBin(d); break;
+            case 9:  d = hexKeDec(s); decKeOct(d); break;
+            case 10: d = octKeDec(s); printf("%lld", d); break;
+            case 11: d = octKeDec(s); decKeBin(d); break;
+            case 12: d = octKeDec(s); decKeHex(d); break;
+            default: printf("Pilihan tidak valid");
         }
 
         printf("\n");
